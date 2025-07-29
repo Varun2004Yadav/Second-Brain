@@ -1,1 +1,1 @@
-export const BACKEND_URL = "https://second-brain-jd66m5yme-varuns-projects-63306bb1.vercel.app/";
+export const BACKEND_URL = "https://second-brain-3f5r.onrender.com";
