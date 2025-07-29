@@ -6,7 +6,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 
-export function Singin(){
+export function Signin(){
 const emailRef = useRef<HTMLInputElement>(null);
 const passwordRef = useRef<HTMLInputElement>(null);
 const navigate = useNavigate();
@@ -34,6 +34,11 @@ const navigate = useNavigate();
                 <Input ref= {passwordRef}placeholder="Password"/>
                 <div className="flex justify-center pt-4">
                 <Button onClick={signin} loading={false} variant="primary" size="sm" text="Signin" fullWidth={true}/>
+                </div>
+                <div className="text-blue-500 hover:underline flex justify-center pt-4">
+                    <button onClick={() => navigate("/signup")}>
+                    Create Account Sign up
+                    </button>
                 </div>
             </div>
 

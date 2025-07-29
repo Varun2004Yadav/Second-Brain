@@ -5,7 +5,9 @@ import { BACKEND_URL } from "../config";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export function Singup(){
+
+
+export function Signup(){
 
  const emailRef = useRef<HTMLInputElement>(null);
  const passwordRef = useRef<HTMLInputElement>(null);
@@ -31,6 +33,11 @@ export function Singup(){
                 <Input ref={passwordRef} placeholder="Password"/>
                 <div className="flex justify-center pt-4">
                 <Button onClick={signup} loading={false} variant="primary" size="sm" text="Signup" fullWidth={true}/>
+                </div>
+                <div className="text-blue-500 hover:underline flex justify-center pt-4">
+                    <button onClick={() => navigate("/signin")}>
+                    Already SignedUp? Sign in
+                    </button>
                 </div>
             </div>
 

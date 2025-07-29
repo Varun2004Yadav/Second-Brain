@@ -12,7 +12,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.JWT_USER_PASSWORD = void 0;
 const express_1 = __importDefault(require("express"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -21,10 +20,19 @@ const db_1 = require("./db");
 const db_2 = require("./db");
 const utils_1 = require("./utils");
 const cors_1 = __importDefault(require("cors"));
-exports.JWT_USER_PASSWORD = "this is the secret key";
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
+const jwtPassword = process.env.JWT_USER_PASSWORD;
+if (!jwtPassword) {
+    throw new Error(" JWT_USER_PASSWORD is not defined in the .env file.");
+}
+const mongoUrl = process.env.MONGO_URL;
+if (!mongoUrl) {
+    throw new Error("MONGO_URL is not defined in the .env file.");
+}
 app.post('/api/v1/signup', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
     try {
@@ -52,7 +60,7 @@ app.post("/api/v1/signin", (req, res) => __awaiter(void 0, void 0, void 0, funct
     if (user) {
         const token = jsonwebtoken_1.default.sign({
             id: user._id,
-        }, exports.JWT_USER_PASSWORD);
+        }, jwtPassword);
         console.log(token);
         res.json({
             token: token
@@ -155,7 +163,7 @@ app.get("/api/v1/brain/:shareLink", (req, res) => __awaiter(void 0, void 0, void
 }));
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        yield mongoose_1.default.connect("mongodb://127.0.0.1:27017/Second-Brain-app");
+        yield mongoose_1.default.connect(mongoUrl);
         app.listen(3000);
         console.log("Listening on Port 3000");
     });

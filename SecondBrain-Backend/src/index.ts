@@ -6,12 +6,22 @@ import {ContentModel, userModel} from "./db"
 import { LinkModel } from "./db";
 import { random } from "./utils";
 import cors from "cors";
-export const  JWT_USER_PASSWORD="this is the secret key"
-
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 app.use(express.json());
 app.use(cors());
+
+const jwtPassword = process.env.JWT_USER_PASSWORD;
+if (!jwtPassword) {
+  throw new Error(" JWT_USER_PASSWORD is not defined in the .env file.");
+}
+const mongoUrl = process.env.MONGO_URL as string;
+
+if (!mongoUrl) {
+  throw new Error("MONGO_URL is not defined in the .env file.");
+}
 
 app.post('/api/v1/signup',async (req,res) => {
     const {email,password} = req.body;
@@ -43,7 +53,7 @@ app.post("/api/v1/signin", async (req,res) => {
     if(user){
         const token = jwt.sign({
             id: user._id, 
-        },JWT_USER_PASSWORD);
+        },jwtPassword);
         console.log(token);
         res.json({
             token: token
@@ -176,7 +186,7 @@ app.get("/api/v1/brain/:shareLink", async (req,res) => {
 
 
 async function main(){
-    await mongoose.connect("mongodb://127.0.0.1:27017/Second-Brain-app");
+    await mongoose.connect(mongoUrl);
     app.listen(3000);
     console.log("Listening on Port 3000");
 }

@@ -1,7 +1,7 @@
 import './App.css'
 import { Dashboard } from './pages/dashboard'
-import { Singin } from './pages/Signin'
-import { Singup } from './pages/Signup'
+import { Signin } from './pages/Signin'
+import {Signup} from './pages/Signup'
 import { BrowserRouter, Routes,Route } from 'react-router-dom'
 
 
@@ -12,9 +12,9 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-            <Route path='/' element={<Singup/>}/>
-            <Route path='/signup' element={<Singup/>}/>
-            <Route path='/signin' element={<Singin/>}/>
+            <Route path='/' element={<Signup/>}/>
+            <Route path='/signup' element={<Signup/>}/>
+            <Route path='/signin' element={<Signin/>}/>
             <Route path='/dashboard' element={<Dashboard/>}/>
             <Route path='/share/:shareId' element={<Dashboard/>}/>
         </Routes>
